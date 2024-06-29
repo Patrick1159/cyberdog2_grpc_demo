@@ -1,0 +1,43 @@
+
+        BLUETOOTH_CONNECT = 8002;
+        BLUETOOTH_DISCONNECTED_UNEXPECTED = 8003;
+        BLUETOOTH_CONNECTED_DEVICES = 8004;
+        BLE_DIVICE_FIRMWARE_VERSION = 8005;
+        BLE_DEVICE_BATTERY_LEVEL = 8006;
+        DELETE_BLE_HISTORY = 8007;
+        BLE_FIRMWARE_UPDATE_NOTIFICATION = 8008;
+        UPDATE_BLE_FIRMWARE = 8009;
+        BLE_DFU_PROGRESS = 8010;
+        SET_BT_TREAD = 8011;
+        UPDATE_BT_TREAD = 8012;
+        GET_BT_TREAD = 8013;
+        UNLOCK_DEVELOP_ACCESS = 9030;
+        REBOOT_MACHINE = 9031;
+        STATUS_REQUEST = 10001;
+        LOW_POWER_EXIT = 10002;
+        AUTO_LOW_POWER_ENABLE = 10003;
+        SET_WORK_ENVIRONMENT = 10004;
+        UPLOAD_SYSLOG = 10005;
+        POWER_OFF = 10006;
+        LCM_LOG_UPLOAD = 10007;
+        ENABLE_ELEC_SKIN = 11001;
+        SET_ELEC_SKIN = 11002;
+        DOG_LEG_CALIBRATION = 12001;
+    }
+}
+
+message RecResponse {
+    fixed32 nameCode     = 1;
+    string data          = 2;
+}
+
+message Result {
+    string result = 1;
+}
+
+message FileChunk {
+    fixed32 error_code = 1;
+    string file_name   = 2;
+    fixed32 file_size  = 3;
+    bytes buffer       = 4;
+}
