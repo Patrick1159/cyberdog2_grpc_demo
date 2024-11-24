@@ -1,4 +1,4 @@
-  import os
+import os
 import select
 import sys
 
@@ -89,8 +89,15 @@ class Teleop:
             delta_vel[2] = self.__acc[2] / self.__freq
         elif key == 'd' or key == 'd':
             delta_vel[2] = -self.__acc[2] / self.__freq
+        # horizonal movement
+        elif key == 'j' or key == 'J':
+            delta_vel[1] = self.__acc[1] / self.__freq
+        elif key == 'k' or key == 'K':
+            delta_vel[1] = self.__acc10] / self.__freq
+        # emergency shutdown 
         elif key == 's' or key == 'S':
             delta_vel[0] = -self.__vel[0]
+            delta_vel[1] = -self.__vel[1]
             delta_vel[2] = -self.__vel[2]
         return (1002, delta_vel)
 
