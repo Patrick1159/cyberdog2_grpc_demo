@@ -93,7 +93,7 @@ class Teleop:
         elif key == 'j' or key == 'J':
             delta_vel[1] = self.__acc[1] / self.__freq
         elif key == 'k' or key == 'K':
-            delta_vel[1] = self.__acc10] / self.__freq
+            delta_vel[1] = self.__acc[10] / self.__freq
         # emergency shutdown 
         elif key == 's' or key == 'S':
             delta_vel[0] = -self.__vel[0]
