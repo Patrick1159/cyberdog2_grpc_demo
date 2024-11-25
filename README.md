@@ -5,4 +5,5 @@ ssh连接mi@xxx.xxx.xx.xx后，cd grpc_demo，运行：
 # 常见问题解决  
 - **pip无法正常使用**：```sudo mv /etc/mr813_version /etc/mr813_version.backup```
 
-# Reference: https://github.com/WLwind/grpc_demo/blob/master/cyberdog_app.proto
+# Reference
+https://github.com/WLwind/grpc_demo/blob/master/cyberdog_app.proto
