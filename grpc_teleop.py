@@ -7,7 +7,7 @@ if os.name == 'nt':
     print('os.name is nt')
 else:
     import termios
-    import tty 
+    import tty
     print('os.name is', os.name)
 
 import grpc
@@ -21,7 +21,7 @@ class Client:
             open(ca_cert, 'rb').read(),
             open(client_key, 'rb').read(),
             open(client_cert, 'rb').read())
-        channel_options = (('grpc.ssl_target_name_override', 'cyberdog2.server'), 
+        channel_options = (('grpc.ssl_target_name_override', 'cyberdog2.server'),
                            ('grpc.default_authority', 'cyberdog2.server'))
         chennel = grpc.secure_channel(cyberdog_ip + ':50052', creds, channel_options)
         self.__stub = cyberdog_app_pb2_grpc.GrpcAppStub(chennel)
@@ -38,7 +38,7 @@ class Client:
             print('failed to send msg')
 
 class Teleop:
-    def __init__(self, acc=[0.1, 0.0, 1.0], freq=10.0, max_vel=[1.0, 0.0, 1.5]):
+    def __init__(self, acc=[0.1, 5.0, 1.0], freq=10.0, max_vel=[1.0, 90.0, 1.5]):
         self.__vel = [0.0, 0.0, 0.0]
         self.__acc = acc
         self.__freq = freq
@@ -54,7 +54,7 @@ class Teleop:
             if abs(delta_vel[i]) > 0.00001:
                 updated = True
             else:
-                continue 
+                continue
             self.__vel[i] += delta_vel[i]
             if self.__vel[i] > self.__max_vel[i]:
                 self.__vel[i] = self.__max_vel[i]
@@ -75,7 +75,7 @@ class Teleop:
             key = ''
         termios.tcsetattr(sys.stdin, termios.TCSADRAIN, settings)
         return key
-         	
+
     def getVelFromKey(self):
         key = self.__getKey(self.__settings)
         delta_vel = [0.0, 0.0, 0.0]
@@ -89,22 +89,24 @@ class Teleop:
             delta_vel[2] = self.__acc[2] / self.__freq
         elif key == 'd' or key == 'd':
             delta_vel[2] = -self.__acc[2] / self.__freq
-        # horizonal movement
         elif key == 'j' or key == 'J':
             delta_vel[1] = self.__acc[1] / self.__freq
-        elif key == 'k' or key == 'K':
-            delta_vel[1] = self.__acc[10] / self.__freq
-        # emergency shutdown 
+        elif key == 'l' or key == 'L':
+            delta_vel[1] = -self.__acc[1] / self.__freq
+
         elif key == 's' or key == 'S':
             delta_vel[0] = -self.__vel[0]
             delta_vel[1] = -self.__vel[1]
             delta_vel[2] = -self.__vel[2]
+        # else:
+             # 如果未检测到按键，速度归零
+          #  delta_vel = [0.0, 0.0, 0.0]
         return (1002, delta_vel)
 
 class ProtoEncoder:
     def encodeVel(self, vel):
         cmd = {}
-        cmd['motion_id'] = 303 ##303慢走 308中速走 305快走 301前后跳 302四足小跳
+        cmd['motion_id'] = 303
         cmd['cmd_type'] = 1
         cmd['cmd_source'] = 3
         cmd['value'] = 0
@@ -136,7 +138,7 @@ if __name__ == '__main__':
             print('exit')
             break
         vel = teleop.updateVel(delta_vel)
-        if abs(vel[0]) < 0.01 and abs(vel[2]) < 0.01:
+        if abs(vel[0]) < 0.01 and abs(vel[2]) < 0.01 and abs(vel[1]) < 0.01:
             if stop_signal:
                 continue
             stop_signal = True
