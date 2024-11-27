@@ -4,6 +4,6 @@ ssh连接mi@xxx.xxx.xx.xx后，cd grpc_demo，运行：
 ```python3 grpc_teleop.py 172.18.21.183 cert/ca-cert.pem cert/client-key.pem cert/client-cert.pem```
 # 常见问题解决  
 - **pip无法正常使用**：```sudo mv /etc/mr813_version /etc/mr813_version.backup```
-
+- building wheel too long: use `pip3 install --no-cache-dir  --force-reinstall -Iv grpcio==<version_number>`
 # Reference
 https://github.com/WLwind/grpc_demo/blob/master/cyberdog_app.proto
